@@ -1,0 +1,59 @@
+﻿@page "/"
+<!-- El using de la clase UtilidadesString se realiza desde el archivo _Imports.razor -->
+<p>Hola, @UtilidadesString.ConvertirEnMayusculas(nombre)</p>
+<p>Hola, @UtilidadesString2.ConvertirEnMayusculas(nombre2)</p>
+
+<p>Vamos a sumar 2 + 2 = @(2+2) </p>
+<button @onclick="@(()=> Console.WriteLine("me han clikeado"))">Precioname</button>
+<button @onclick="@manejarClick">Precioname desde metodo</button>
+
+<div>
+    <h3>Pelicula</h3>
+    <p>Titulo: <b>@Spiderman.Titulo</b></p>
+    <p>Lanzamiento: <b>@Spiderman.Lanzamiento.ToString("dd MM yyyy")</b></p>
+</div>
+<div>
+    <h3>Peliculas</h3>
+    @foreach (var pelicula in ObtenerPeliculas())
+    {
+        <div>
+            <p>Titulo: <b>@pelicula.Titulo</b></p>
+            <p>Lanzamiento: <b>@pelicula.Lanzamiento.ToString("dd MM yyyy")</b></p>
+        </div>
+    }
+
+</div>
+
+@code{
+        string nombre = "Ervin";
+        string nombre2 = "Mario";
+        public Pelicula Spiderman { get { return ObtenerPelicula(); } }
+
+        public class UtilidadesString2
+        {
+            public static string ConvertirEnMayusculas(string nombre)
+            {
+                return nombre.ToUpper();
+            }
+        }
+
+
+
+        private void manejarClick()
+        {
+            Console.WriteLine("me han clikeado desde metodo");
+        }
+
+        private Pelicula ObtenerPelicula() {
+            return new Pelicula() { Titulo = "Spider man", Lanzamiento = new DateTime(2019,7,2)};
+        }
+
+        private List<Pelicula> ObtenerPeliculas() {
+            return new List<Pelicula>()
+        {
+            new Pelicula(){ Titulo="Spiderman", Lanzamiento = new DateTime(2019,7,2) },
+            new Pelicula(){ Titulo="Moana", Lanzamiento=new DateTime(2016,11,23)},
+            new Pelicula(){ Titulo = "Inception", Lanzamiento= new DateTime(2010,7,26) }
+    };
+}
+}

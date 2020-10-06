@@ -1,0 +1,75 @@
+﻿<div>
+    @*<div>
+        <h3>Peliculas foreach</h3>
+        @foreach (var pelicula in Peliculas)
+        {
+            <div>
+                <p>Titulo: <b>@pelicula.Titulo</b></p>
+                <p>Lanzamiento: <b>@pelicula.Lanzamiento.ToString("dd MM yyyy")</b></p>
+            </div>
+        }
+
+    </div>*@
+    <div>
+        <h3>Peliculas for</h3>
+
+        @if (Peliculas == null)
+        {
+            <text>Cargando...</text>
+        }
+        else if (Peliculas.Count == 0)
+        {
+            <text>No hay registros para mostar</text>
+        }
+        else
+        {
+
+            <label><input type="checkbox" @onchange="@(()=> MostrarBotones = !MostrarBotones)" /> Check sin data binding</label>
+
+            <label><input type="checkbox" @bind="MostrarBotones" /> Check con data binding</label>
+
+            @for (var i = 0; i < Peliculas.Count; i++)
+            {
+                <div>
+                    @if (i == Peliculas.Count - 1)
+                    {
+                        <p>Esta es la ultima pelicula</p>
+                    }
+                    <PeliculaIndividual Pelicula="Peliculas[i]" MostrarBotones="MostrarBotones"
+                                        EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam"/>
+                </div>
+            }
+        }
+
+
+    </div>
+</div>
+
+@code {
+    //los parametros deben ser publicos y tambien tiene que ser una propidad
+    [Parameter] public List<Pelicula> Peliculas { get; set; }
+
+    bool MostrarBotones = true;
+
+    void EliminarPelicula()
+    {
+        Console.WriteLine($"Eliminando una pelicula");
+    }
+
+    void EliminarPeliculaParam(Pelicula pelicula)
+    {
+        Peliculas.Remove(pelicula);
+        Console.WriteLine($"Eliminando la pelicula {pelicula.Titulo}");
+    }
+
+    //se ejecuta al momento de cargar el archivo de razor
+    //protected override async Task OnInitializedAsync()
+    //{
+    //await Task.Delay(3000);
+
+    //Peliculas = ObtenerPeliculas();
+    //Peliculas = new List<Pelicula>();
+    //}
+
+
+}

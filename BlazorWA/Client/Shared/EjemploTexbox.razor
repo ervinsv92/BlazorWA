@@ -1,0 +1,7 @@
+﻿<input type="text" value="" placeholder="placeholder por defecto" @attributes="ParametrosAdicionales"/>
+<!-- En blazor los atributos se aplican de derecha a izquierda, por este motivo hay que dejar los parametros por defecto hasta la izquierda, para que se apliquen de ultimo si no hay 
+parametro con variable-->
+@code {
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> ParametrosAdicionales { get; set; }
+}

@@ -12,48 +12,65 @@
     <p>Titulo: <b>@Spiderman.Titulo</b></p>
     <p>Lanzamiento: <b>@Spiderman.Lanzamiento.ToString("dd MM yyyy")</b></p>
 </div>
-<div>
-    <h3>Peliculas</h3>
-    @foreach (var pelicula in ObtenerPeliculas())
-    {
-        <div>
-            <p>Titulo: <b>@pelicula.Titulo</b></p>
-            <p>Lanzamiento: <b>@pelicula.Lanzamiento.ToString("dd MM yyyy")</b></p>
-        </div>
-    }
 
+<ListadoPeliculas Peliculas="ObtenerPeliculas()"/>
+
+<div>
+    <h2>Crear nueva pelicula</h2>
+
+    <EjemploTexbox placeholder="Nombre Pelicula" disabled="true" />
+
+    <EjemploTexbox @attributes="@(new Dictionary<string, object>() {
+
+                                      { "placeholder", "nuevo placeholder 1"},
+                                      { "disabled", "true"},
+
+                                })" />
+
+    <EjemploTexbox @attributes="EjemploTexboxParametros" />
+
+    <EjemploTexbox />
 </div>
 
 @code{
-        string nombre = "Ervin";
-        string nombre2 = "Mario";
-        public Pelicula Spiderman { get { return ObtenerPelicula(); } }
+    //MarkupString, renderisa el codigo html de un string para representarlo bien en el navegador
+    string nombre = "Ervin";
+    string nombre2 = "Mario";
+    public Pelicula Spiderman { get { return ObtenerPelicula(); } }
 
-        public class UtilidadesString2
+    private Dictionary<string, object> EjemploTexboxParametros = new Dictionary<string, object>() {
+
+                                      { "placeholder", "nuevo placeholder 2"},
+                                      { "disabled", "true"},
+
+                                };
+
+    public class UtilidadesString2
+    {
+        public static string ConvertirEnMayusculas(string nombre)
         {
-            public static string ConvertirEnMayusculas(string nombre)
-            {
-                return nombre.ToUpper();
-            }
+            return nombre.ToUpper();
         }
+    }
 
 
 
-        private void manejarClick()
+    private void manejarClick()
+    {
+        Console.WriteLine("me han clikeado desde metodo");
+    }
+
+    private Pelicula ObtenerPelicula() {
+        return new Pelicula() { Titulo = "Spider man", Lanzamiento = new DateTime(2019,7,2)};
+    }
+
+    private List<Pelicula> ObtenerPeliculas()
+    {
+        return new List<Pelicula>()
         {
-            Console.WriteLine("me han clikeado desde metodo");
-        }
-
-        private Pelicula ObtenerPelicula() {
-            return new Pelicula() { Titulo = "Spider man", Lanzamiento = new DateTime(2019,7,2)};
-        }
-
-        private List<Pelicula> ObtenerPeliculas() {
-            return new List<Pelicula>()
-        {
-            new Pelicula(){ Titulo="Spiderman", Lanzamiento = new DateTime(2019,7,2) },
-            new Pelicula(){ Titulo="Moana", Lanzamiento=new DateTime(2016,11,23)},
+            new Pelicula(){ Titulo="<b>Spiderman</b>", Lanzamiento = new DateTime(2019,7,2) },
+            new Pelicula(){ Titulo="<i>Moana</i>", Lanzamiento=new DateTime(2016,11,23)},
             new Pelicula(){ Titulo = "Inception", Lanzamiento= new DateTime(2010,7,26) }
     };
-}
+    }
 }

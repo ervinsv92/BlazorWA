@@ -1,0 +1,27 @@
+﻿@*<p>@(i + 1)) Titulo: @((MarkupString)Pelicula.Titulo)</p>*@
+<p>Titulo: @((MarkupString)Pelicula.Titulo)</p>
+<p>Lanzamiento: <b>@Pelicula.Lanzamiento.ToString("dd MM yyyy")</b></p>
+@if (MostrarBotones) { 
+<div>
+    <button @onclick="Eliminar">Borrar</button>
+</div>
+
+<div>
+    <button @onclick="EliminarPelicula">Borrar con callback</button>
+</div>
+
+<div>
+    <button @onclick="@(() => EliminarPeliculaParam.InvokeAsync(Pelicula))">Borrar con callback y parametro</button>
+</div>
+}
+
+@code {
+    [Parameter] public Pelicula Pelicula { get; set; }
+    [Parameter] public bool MostrarBotones { get; set; }
+    [Parameter] public EventCallback EliminarPelicula { get; set; }
+    [Parameter] public EventCallback<Pelicula> EliminarPeliculaParam { get; set; }
+
+    void Eliminar() {
+        Console.WriteLine($"Eliminando la pelicula {Pelicula.Titulo}");
+    }
+}

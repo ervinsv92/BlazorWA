@@ -1,5 +1,5 @@
-﻿<div>
-    @*<div>
+﻿
+    <div>
         <h3>Peliculas foreach</h3>
         @foreach (var pelicula in Peliculas)
         {
@@ -9,17 +9,34 @@
             </div>
         }
 
-    </div>*@
-    <div>
+    </div>
+
         <h3>Peliculas for</h3>
 
         @if (Peliculas == null)
         {
             <text>Cargando...</text>
+            @if (Cargando == null)
+            {
+                <span style="color:red;">ChildContent es nulo</span>
+            }
+            else
+            {
+                @Cargando
+            }
+
         }
         else if (Peliculas.Count == 0)
         {
             <text>No hay registros para mostar</text>
+            @if (NoHayRegistros == null)
+            {
+                <span style="color:red;">No hay registros para mostrar</span>
+            }
+            else
+            {
+                @NoHayRegistros
+            }
         }
         else
         {
@@ -36,18 +53,26 @@
                         <p>Esta es la ultima pelicula</p>
                     }
                     <PeliculaIndividual Pelicula="Peliculas[i]" MostrarBotones="MostrarBotones"
-                                        EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam"/>
+                                        EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam" />
                 </div>
             }
         }
 
+    <h1>Listado Generico</h1>
+     <ListadoGenerico Listado="Peliculas">
+         <HayRegistros>
+             <PeliculaIndividual Pelicula="context" MostrarBotones="MostrarBotones"
+                                 EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam" />
+         </HayRegistros>
+     </ListadoGenerico>
 
-    </div>
-</div>
+
 
 @code {
     //los parametros deben ser publicos y tambien tiene que ser una propidad
     [Parameter] public List<Pelicula> Peliculas { get; set; }
+    [Parameter] public RenderFragment Cargando { get; set; } //Acepta cualquier tipo de etiqueta, hasta imagenes
+    [Parameter] public RenderFragment NoHayRegistros { get; set; }
 
     bool MostrarBotones = true;
 

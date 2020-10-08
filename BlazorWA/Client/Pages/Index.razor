@@ -15,6 +15,30 @@
 
 <ListadoPeliculas Peliculas="ObtenerPeliculas()"/>
 
+@*<ListadoPeliculas Peliculas="ObtenerPeliculasNull()">
+    <span style="color:red;">Child Content</span>
+</ListadoPeliculas>
+
+<ListadoPeliculas Peliculas="ObtenerPeliculasNull()"/>
+
+<ListadoPeliculas Peliculas="ObtenerPeliculasNull()">
+    <Cargando>
+        <span style="color:red;">Child content con nombre</span>
+    </Cargando>
+    <NoHayRegistros>
+        <span style="color:red;">no hay registros con nombre</span>
+    </NoHayRegistros>
+</ListadoPeliculas>
+
+<ListadoPeliculas Peliculas="ObtenerPeliculasCantidad0()">
+    <Cargando>
+        <span style="color:red;">Child content con nombre</span>
+    </Cargando>
+    <NoHayRegistros>
+        <span style="color:red;">no hay registros con nombre</span>
+    </NoHayRegistros>
+</ListadoPeliculas>*@
+
 <div>
     <h2>Crear nueva pelicula</h2>
 
@@ -71,6 +95,16 @@
             new Pelicula(){ Titulo="<b>Spiderman</b>", Lanzamiento = new DateTime(2019,7,2) },
             new Pelicula(){ Titulo="<i>Moana</i>", Lanzamiento=new DateTime(2016,11,23)},
             new Pelicula(){ Titulo = "Inception", Lanzamiento= new DateTime(2010,7,26) }
-    };
+        };
+    }
+
+    private List<Pelicula> ObtenerPeliculasNull()
+    {
+        return null;
+    }
+
+    private List<Pelicula> ObtenerPeliculasCantidad0()
+    {
+        return new List<Pelicula>();
     }
 }

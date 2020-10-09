@@ -1,70 +1,70 @@
 ﻿
-    <div>
-        <h3>Peliculas foreach</h3>
-        @foreach (var pelicula in Peliculas)
-        {
-            <div>
-                <p>Titulo: <b>@pelicula.Titulo</b></p>
-                <p>Lanzamiento: <b>@pelicula.Lanzamiento.ToString("dd MM yyyy")</b></p>
-            </div>
-        }
+<div>
+    <h3>Peliculas foreach</h3>
+    @foreach (var pelicula in Peliculas)
+    {
+        <div>
+            <p>Titulo: <b>@pelicula.Titulo</b></p>
+            <p>Lanzamiento: <b>@pelicula.Lanzamiento.ToString("dd MM yyyy")</b></p>
+        </div>
+    }
 
-    </div>
+</div>
 
-        <h3>Peliculas for</h3>
+<h3>Peliculas for</h3>
 
-        @if (Peliculas == null)
-        {
-            <text>Cargando...</text>
-            @if (Cargando == null)
+@if (Peliculas == null)
+{
+    <text>Cargando...</text>
+    @if (Cargando == null)
+    {
+        <span style="color:red;">ChildContent es nulo</span>
+    }
+    else
+    {
+        @Cargando
+    }
+
+}
+else if (Peliculas.Count == 0)
+{
+    <text>No hay registros para mostar</text>
+    @if (NoHayRegistros == null)
+    {
+        <span style="color:red;">No hay registros para mostrar</span>
+    }
+    else
+    {
+        @NoHayRegistros
+    }
+}
+else
+{
+
+    <label><input type="checkbox" @onchange="@(()=> MostrarBotones = !MostrarBotones)" /> Check sin data binding</label>
+
+    <label><input type="checkbox" @bind="MostrarBotones" /> Check con data binding</label>
+
+    @for (var i = 0; i < Peliculas.Count; i++)
+    {
+        <div>
+            @if (i == Peliculas.Count - 1)
             {
-                <span style="color:red;">ChildContent es nulo</span>
+                <p>Esta es la ultima pelicula</p>
             }
-            else
-            {
-                @Cargando
-            }
+            <PeliculaIndividual Pelicula="Peliculas[i]" MostrarBotones="MostrarBotones"
+                                EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam" />
+        </div>
+    }
+}
 
-        }
-        else if (Peliculas.Count == 0)
-        {
-            <text>No hay registros para mostar</text>
-            @if (NoHayRegistros == null)
-            {
-                <span style="color:red;">No hay registros para mostrar</span>
-            }
-            else
-            {
-                @NoHayRegistros
-            }
-        }
-        else
-        {
-
-            <label><input type="checkbox" @onchange="@(()=> MostrarBotones = !MostrarBotones)" /> Check sin data binding</label>
-
-            <label><input type="checkbox" @bind="MostrarBotones" /> Check con data binding</label>
-
-            @for (var i = 0; i < Peliculas.Count; i++)
-            {
-                <div>
-                    @if (i == Peliculas.Count - 1)
-                    {
-                        <p>Esta es la ultima pelicula</p>
-                    }
-                    <PeliculaIndividual Pelicula="Peliculas[i]" MostrarBotones="MostrarBotones"
-                                        EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam" />
-                </div>
-            }
-        }
-
-    <h1>Listado Generico</h1>
-     <ListadoGenerico Listado="Peliculas">
-         <HayRegistros>
-             <PeliculaIndividual Pelicula="context" MostrarBotones="MostrarBotones"
-                                 EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam" />
-         </HayRegistros>
-     </ListadoGenerico>
+<h1>Listado Generico</h1>
+<ListadoGenerico Listado="Peliculas">
+    <HayRegistros>
+        <PeliculaIndividual Pelicula="context" MostrarBotones="MostrarBotones"
+                            EliminarPelicula="EliminarPelicula" EliminarPeliculaParam="EliminarPeliculaParam" />
+    </HayRegistros>
+</ListadoGenerico>
 
 
 
@@ -75,6 +75,48 @@
     [Parameter] public RenderFragment NoHayRegistros { get; set; }
 
     bool MostrarBotones = true;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        //solo se ejecuta una vez cuando se inicializa el componente
+        Console.WriteLine($"OnInitialized - Cantidad peliculas: {Peliculas.Count}" );
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        //se actualiza cada vez que un parametro del componente cambia
+        Console.WriteLine($"OnParametersSet  - Cantidad peliculas: {Peliculas.Count}");
+    }
+
+    protected override void OnAfterRender(bool primeraRenderizacion)
+    {
+        base.OnAfterRender(primeraRenderizacion);
+        //se ejecuta despues de que el html esta listo
+        Console.WriteLine($"OnAfterRender primeraRenderizacion: {primeraRenderizacion}");
+    }
+
+    protected override bool ShouldRender()
+    {
+        base.ShouldRender();
+        Console.WriteLine("ShouldRender");
+        //se puede controlar cuando se renderiza un componente, con true si se renderiza, con false no
+        return true;
+    }
+
+    //protected override void OnInitialized()
+    //{
+    //    base.OnInitialized();
+
+    //    Console.WriteLine("OnInitialized");
+    //}
+    //protected override void OnInitialized()
+    //{
+    //    base.OnInitialized();
+
+    //    Console.WriteLine("OnInitialized");
+    //}
 
     void EliminarPelicula()
     {

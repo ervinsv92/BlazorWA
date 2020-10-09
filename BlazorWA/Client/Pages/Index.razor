@@ -1,4 +1,9 @@
 ﻿@page "/"
+@inject ServiciosSingleton singleton
+@inject IRepositorio repositorio
+
+<p>El valor del singleton es: @singleton.Valor</p>
+
 <!-- El using de la clase UtilidadesString se realiza desde el archivo _Imports.razor -->
 <p>Hola, @UtilidadesString.ConvertirEnMayusculas(nombre)</p>
 <p>Hola, @UtilidadesString2.ConvertirEnMayusculas(nombre2)</p>
@@ -67,20 +72,17 @@
     public Pelicula Spiderman { get { return ObtenerPelicula(); } }
     private List<Pelicula> Peliculas;
 
-    void AgregarPelicula() {
+    void AgregarPelicula()
+    {
 
-        Peliculas.Add(new Pelicula() { Titulo="nueva pelicula", Lanzamiento=DateTime.Now});
+        Peliculas.Add(new Pelicula() { Titulo = "nueva pelicula", Lanzamiento = DateTime.Now });
     }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        Peliculas = new List<Pelicula>(){
-            new Pelicula(){ Titulo="<b>Spiderman</b>", Lanzamiento = new DateTime(2019,7,2) },
-            new Pelicula(){ Titulo="<i>Moana</i>", Lanzamiento=new DateTime(2016,11,23)},
-            new Pelicula(){ Titulo = "Inception", Lanzamiento= new DateTime(2010,7,26) }
-        };
+        Peliculas = repositorio.ObtenerPeliculas();
     }
 
     private Dictionary<string, object> EjemploTexboxParametros = new Dictionary<string, object>() {

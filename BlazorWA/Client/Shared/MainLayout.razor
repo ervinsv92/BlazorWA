@@ -10,6 +10,19 @@
     </div>
 
     <div class="content px-4">
-        @Body
+        <CascadingValue Value="@appState">
+            @Body
+        </CascadingValue>
     </div>
 </div>
+
+@code{
+    AppState appState = new AppState();
+    public class AppState
+    {
+        //esta variable se va a poder acceder desde cualquier hijo del componente que se cargue en el CascadingValue
+        public string Color { get; set; } = "red";
+        public string Size { get; set; } = "12px";
+    }
+
+}

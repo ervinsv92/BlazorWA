@@ -1,8 +1,9 @@
 ﻿@page "/"
 @inject ServiciosSingleton singleton
 @inject IRepositorio repositorio
+@using static BlazorWA.Client.Shared.MainLayout;
 
-<p>El valor del singleton es: @singleton.Valor</p>
+<p style="color:@appState.Color">El valor del singleton es: @singleton.Valor</p>
 
 <!-- El using de la clase UtilidadesString se realiza desde el archivo _Imports.razor -->
 <p>Hola, @UtilidadesString.ConvertirEnMayusculas(nombre)</p>
@@ -19,6 +20,8 @@
 </div>
 
 <ListadoPeliculas Peliculas="ObtenerPeliculas()" />
+
+@*<ListadoPeliculas @ref="listado" Peliculas="Peliculas" />*@
 
 <ListadoPeliculas Peliculas="Peliculas" />
 
@@ -71,17 +74,20 @@
     string nombre2 = "Mario";
     public Pelicula Spiderman { get { return ObtenerPelicula(); } }
     private List<Pelicula> Peliculas;
+    [CascadingParameter] protected AppState appState { get; set; } //este parametro se pasa desde el main layout
+                                                                   //ListadoPeliculas listado;
+
+
 
     void AgregarPelicula()
     {
-
         Peliculas.Add(new Pelicula() { Titulo = "nueva pelicula", Lanzamiento = DateTime.Now });
     }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
+        //var lista = listado.Peliculas;
         Peliculas = repositorio.ObtenerPeliculas();
     }
 

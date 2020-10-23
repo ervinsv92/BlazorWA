@@ -14,9 +14,6 @@ namespace BlazorWA.Client.Pages
         [Inject] protected ServiciosSingleton Singleton { get; set; }
         [Inject] protected ServiciosTransient Transient { get; set; }
         [Inject] protected IJSRuntime JS { get; set; }
-        //[CascadingParameter (Name = "Color")] protected string Color { get; set; } //este parametro se pasa desde el main layout
-        [CascadingParameter] protected AppState appState { get; set; } //este parametro se pasa desde el main layout
-
 
         protected int currentCount = 0;
         static int currentCountStatic = 0;

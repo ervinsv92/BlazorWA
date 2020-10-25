@@ -41,10 +41,10 @@ app {
             margin-left: 1.5rem;
         }
 
-.main .top-row a:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        .main .top-row a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
 .sidebar {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
@@ -129,12 +129,28 @@ app {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.form-markdown {
+    display: flex !important;
 }
+
+    .form-markdown textarea {
+        width: 500px !important;
+        height: 500px !important;
+        margin-right: 15px !important;
+    }
+
+    .form-markdown .markdown-container {
+        border: 1px dashed black !important;
+        width: 500px !important;
+        height: 500px !important;
+    }
 
 @media (max-width: 767.98px) {
     .main .top-row:not(.auth) {

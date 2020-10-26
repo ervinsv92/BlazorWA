@@ -1,11 +1,15 @@
 ﻿@page "/peliculas/editar/{PeliculaId:int}"
 <h3>Editar Pelicula</h3>
 
-<FormularioPeliculas Pelicula="Pelicula" OnValidSubmit="Editar"></FormularioPeliculas>
+<FormularioPeliculas Pelicula="Pelicula" OnValidSubmit="Editar" 
+                     GenerosNoSeleccionados="GenerosNoSeleccionados" 
+                     GenerosSeleccionados="GenerosSeleccionados"></FormularioPeliculas>
 
 @code {
     [Parameter] public int PeliculaId { get; set; }
     private Pelicula Pelicula = new Pelicula();
+    private List<Genero> GenerosSeleccionados = new List<Genero>();
+    private List<Genero> GenerosNoSeleccionados = new List<Genero>();
 
     void Editar()
     {
@@ -16,6 +20,15 @@
     {
         base.OnInitialized();
         Pelicula = new Pelicula() { Id=PeliculaId, Titulo="Mi pelicula"};
+        GenerosNoSeleccionados = new List<Genero>() {
+            new Genero(){ Id=1, Nombre = "Comedia"},
+            new Genero(){ Id=1, Nombre = "Drama"},
+            new Genero(){ Id=1, Nombre = "Sci-Fi"},
+        };
+
+        GenerosSeleccionados = new List<Genero>() {
+            new Genero(){ Id=1, Nombre = "Accion"},
+        };
 
     }
 }

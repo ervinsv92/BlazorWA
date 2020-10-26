@@ -6,8 +6,15 @@
 
 @code {
     private Persona Persona = new Persona();
+    
 
-    private void Crear() {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    private void Crear()
+    {
         Console.WriteLine("Crear persona");
     }
 }

@@ -14,6 +14,7 @@ namespace BlazorWA.Shared.Entidades
         public string Foto { get; set; }
         [Required]
         public DateTime? FechaNacimiento { get; set; }
+        public List<PeliculaActor> PeliculaActor { get; set; }
 
         public override bool Equals(object obj)
         {

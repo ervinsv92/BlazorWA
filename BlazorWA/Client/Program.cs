@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using BlazorWA.Client.Repositorios;
 using Tewr.Blazor.FileReader;
+using BlazorWA.Client.Helpers;
 
 namespace BlazorWA.Client
 {
@@ -30,6 +31,7 @@ namespace BlazorWA.Client
             services.AddTransient<ServiciosTransient>();
             services.AddScoped<IRepositorio, Repositorio>();
             services.AddFileReaderService(options => options.UseWasmSharedBuffer = true);
+            services.AddScoped<IMostrarMensajes, MostrarMensajes>();
         }
     }
 }

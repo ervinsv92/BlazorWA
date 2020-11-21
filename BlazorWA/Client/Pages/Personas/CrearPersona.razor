@@ -12,21 +12,6 @@
 
     private async Task Crear()
     {
-        string nombre = "asdasd";
-        try
-        {
-
-        }
-        catch (Exception e)
-        {
-
-            throw;
-        }
-    }
-
-    private async Task Crear_2()
-    {
-        string nombre = "asdasd";
         var httpResponse = await repositorio.Post("api/personas", Persona);
 
         if (httpResponse.Error)
